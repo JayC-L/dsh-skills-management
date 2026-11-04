@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "技能管理",
+    "description": "查看 Skill 清单，独立控制文件型 Skill 的模型与用户手动调用，实时读取源文件且不修改 Skill。"
+  }
+}

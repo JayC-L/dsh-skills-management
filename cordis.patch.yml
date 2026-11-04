@@ -1,0 +1,4 @@
+# Mount the global skill policy service and management panel.
+- insert:
+    - id: skills-management
+      name: 'dsh-skills-management'
