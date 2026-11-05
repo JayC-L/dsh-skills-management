@@ -150,7 +150,8 @@ test("missing rows replace invocation switches with the native policy delete but
     Button: "Button",
     Switch: "Switch",
     Tag: "Tag",
-    IconTrashOutlineRegular: "IconTrashOutlineRegular"
+    IconTrashOutlineRegular: "IconTrashOutlineRegular",
+    PACKAGE_ID: "dsh-skills-management"
   });
   const missingTree = JSON.stringify(SkillRow({ skill: { name: "ghost", missing: true } }));
   assert.match(missingTree, /Button/);
@@ -171,7 +172,7 @@ test("invocation channels map to independent filter kinds and badge tones", asyn
   const start = source.indexOf("function invocationStatusKind");
   const end = source.indexOf("function SkillRow", start);
   assert.ok(start >= 0 && end > start);
-  const helpers = runInNewContext(`${source.slice(start, end)}\n({ kind: invocationStatusKind, status: invocationStatus });`, {});
+  const helpers = runInNewContext(`${source.slice(start, end)}\n({ kind: invocationStatusKind, status: invocationStatus, fileLabel: fileStateLabel });`, { PACKAGE_ID: "dsh-skills-management" });
   assert.equal(helpers.kind({}), "available");
   assert.equal(helpers.kind({ modelInvocable: true, userInvocable: false }), "model");
   assert.equal(helpers.kind({ modelInvocable: false, userInvocable: true }), "user");
@@ -188,4 +189,12 @@ test("invocation channels map to independent filter kinds and badge tones", asyn
   assert.equal(helpers.status({ modelInvocable: false, userInvocable: false }).tone, "danger");
   assert.equal(helpers.status({ missing: true }).label, "已禁用");
   assert.equal(helpers.status({ missing: true }).tone, "danger");
+  assert.equal(helpers.fileLabel({ fileState: "provider-file" }), "来源文件");
+  assert.equal(helpers.fileLabel({ provider: "dsh-skills-management", fileState: "virtual" }), "路径失效");
+  assert.equal(helpers.fileLabel({ provider: "filesystem", fileState: "virtual" }), "仅注册");
+  assert.equal(helpers.fileLabel({ provider: "dsh-office", source: "bundled", fileState: "virtual" }), "内置资源");
+  assert.equal(helpers.fileLabel({ provider: "runtime", fileState: "virtual" }), "非文件");
+  assert.equal(helpers.fileLabel({ linked: true, fileState: "file" }), "Junction");
+  assert.equal(helpers.fileLabel({ fileState: "file" }), "本地文件");
+  assert.equal(helpers.fileLabel({ missing: true }), "未加载");
 });

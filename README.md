@@ -58,7 +58,7 @@ A manageable Skill must meet all of these conditions:
 
 Regular directories, flat Markdown files, and Junctions are supported. A file discovered on disk but not registered with DSH is not treated as a manageable invocation target.
 
-Non-file Providers continue to supply their own catalog entries and content. This plugin does not take over, copy, or persist their bodies, and it does not infer a local path from a `source` label. These rows show **Read only**, and direct management API requests are rejected too.
+Non-file Providers continue to supply their own catalog entries and content. This plugin does not take over, copy, or persist their bodies, and it does not infer a local path from a `source` label. These rows show **Read only**, and direct management API requests are rejected too. Bundled Provider assets are read-only even when a `SKILL.md` file exists.
 
 ## Invocation channels
 
@@ -81,7 +81,7 @@ Each row shows:
 
 - Skill name and current description;
 - Provider name;
-- File form: local file, Junction, provider file, registered entry, or missing;
+- Source form: local file, Junction, source file, stale path, registered only, bundled resource, non-file, or missing;
 - Current invocation status;
 - Two switches for file-backed Skills, **Read only** for other Providers, or a delete button for missing entries.
 

@@ -18,10 +18,14 @@ test("documentation defaults to English with a Chinese switch and consistent nam
   assert.match(en, /English \| \[简体中文\]\(README\.zh-CN\.md\)/);
   assert.match(en, /Skills from every Provider remain visible/);
   assert.match(en, /user manual invocation \(`\/name`\)/);
+  assert.match(en, /Bundled Provider assets are read-only/);
+  assert.doesNotMatch(en, /provider file|no longer/i);
   assert.doesNotMatch(en, /(?<!user )manual invocation/i);
   assert.match(zh, /\[English\]\(README\.md\) \| 简体中文/);
   assert.match(zh, /所有 Provider 的 Skill 都可展示/);
   assert.match(zh, /用户手动调用（`\/名称`）/);
+  assert.match(zh, /内置资源/);
+  assert.doesNotMatch(zh, /插件文件|不再/);
   assert.doesNotMatch(zh, /(?<!用户)手动调用/);
   assert.doesNotMatch(zh, /面向 \*\*文件型 Skill|用户\s*\//);
   assert.notEqual(en, zh);

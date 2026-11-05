@@ -285,7 +285,7 @@ test("duplicate file candidates still prove an overlay original exists", () => {
   assert.equal(rows[0].fileState, "virtual", "ambiguous duplicates lend no file metadata");
 });
 
-test("Registry real paths retain matching Junction evidence", () => {
+test("fresh matching Junction evidence overrides stale Registry metadata", () => {
   const rows = mergeInventory({
     fileSkills: [{
       name: "linked-skill",
@@ -303,6 +303,8 @@ test("Registry real paths retain matching Junction evidence", () => {
       provider: "filesystem",
       source: "user-dsh",
       path: "D:/truth/linked-skill/SKILL.md",
+      fileState: "provider-file",
+      linked: false,
       invocation: { modelInvocable: true, userInvocable: true }
     }]
   });

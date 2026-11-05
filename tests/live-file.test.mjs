@@ -71,6 +71,12 @@ test("live file entries reread current content and preserve resource guidance", 
   assert.equal(stored.sourcePath, source);
   assert.deepEqual(stored.sourceBase, resourceBase);
   assert.equal(stored.snapshot, undefined);
+  const staleBase = { kind: "directory", path: join(f.directory, "moved-away", "demo") };
+  await f.store.update("demo", { ...stored, sourceBase: staleBase });
+  const recovered = await provider.get(updatedRow);
+  assert.deepEqual(recovered.resourceBase, resourceBase, "a missing stored base falls back to the current source directory");
+  const persisted = JSON.parse(await readFile(join(f.directory, "disabled.json"), "utf8")).skills.demo;
+  assert.deepEqual(persisted.sourceBase, staleBase, "live reads never rewrite policy paths");
 });
 
 test("source metadata locates current directory bundles and flat files", async (t) => {
